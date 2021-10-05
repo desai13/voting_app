@@ -1,11 +1,16 @@
 import streamlit as st
 import pandas as pd
 import json
+import numpy as np
+from PIL import Image
 
 """
-# Voting app
+# Vote for the next trip location!
 Enter your ranked vote below, then see the results:
 """
+
+image = Image.open('wales.JPG')
+st.image(image, caption='Photo from the last trip to Wales')
 
 with open('myfile.json') as json_file:
     voting_ledger = json.load(json_file)
