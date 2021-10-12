@@ -1,8 +1,31 @@
 import streamlit as st
 import pandas as pd
-import json
-import numpy as np
+from faunadb import query as q
+from faunadb.client import FaunaClient
 from PIL import Image
+
+names = ['Adi', 'Mostafa', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
+options = ['Lake District', 'Yorkshire Dales', 'Wales']
+number_of_options = len(options)
+
+client = FaunaClient(
+  secret=st.secrets["fauna"],
+  domain="db.eu.fauna.com",
+  port=443,
+  scheme="https"
+)
+
+
+def calc_borda_score(df):
+    borda_score = {k: 0 for k in options}
+    for i in range(0, number_of_options):
+        for rank in options:
+            try:
+                borda_score[rank] += df.iloc[i].value_counts()[rank] * (number_of_options - i)
+            except KeyError:
+                pass
+    return borda_score
+
 
 """
 # Vote for the next trip location!
@@ -11,13 +34,6 @@ Enter your ranked vote below, then see the results:
 
 image = Image.open('wales.JPG')
 st.image(image, caption='Photo from the last trip to Wales')
-
-with open('myfile.json') as json_file:
-    voting_ledger = json.load(json_file)
-
-names = ['Adi', 'Mostafa', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
-options = ['Lake District', 'Yorkshire Dales', 'Wales']
-number_of_options = len(options)
 
 name = st.selectbox('Name?', names)
 rank_1 = st.selectbox('Rank 1?', options)
@@ -40,34 +56,27 @@ if pressed:
         voting_ledger = {}
         add_to_ledger()
 
-    out_file = open("myfile.json", "w")
-    json.dump(voting_ledger, out_file, indent=6)
-    out_file.close()
-
-    votes = pd.read_json('myfile.json').T
+    update = client.query(
+        q.update(
+            q.ref(q.collection("voting_ledger"), "312085305760940232"),
+            {
+                "data": voting_ledger
+            }
+        )
+    )
     st.write("Woohoo! Thanks for voting")
 
-# reading votes from JSON
-votes = pd.read_json('myfile.json').T
-df = pd.DataFrame.from_dict(voting_ledger).T
-df = votes.copy()
-
-# calculating Borda scores from votes
-borda_score = {k: 0 for k in options}
-for i in range(0, number_of_options):
-    for rank_1 in options:
-        try:
-            borda_score[rank_1] += df[i].value_counts()[rank_1] * (number_of_options - i)
-        except KeyError:
-            pass
-
-# displaying vote count in bar chart
-borda_barchart = pd.DataFrame.from_dict(borda_score, orient='index', columns=['Votes'])
-
 if st.checkbox('Show results'):
+    result = client.query(
+        q.get(q.ref(q.collection("voting_ledger"), "312085305760940232"))
+    )
+    voting_ledger = result['data']
+    df = pd.DataFrame.from_dict(voting_ledger).T
     if name == 'Adi':
         """Voting Ledger"""
-        votes
+        df
+    borda_score = calc_borda_score(df.T)
+    borda_barchart = pd.DataFrame.from_dict(borda_score, orient='index', columns=['Votes'])
     st.write(f'{max(borda_score, key=borda_score.get)} wins election!')
     st.bar_chart(borda_barchart)
 
