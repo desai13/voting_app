@@ -3,6 +3,8 @@ import pandas as pd
 from faunadb import query as q
 from faunadb.client import FaunaClient
 from PIL import Image
+import plotly.graph_objects as go
+
 
 names = ['Adi', 'Mostafa', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
 options = ['Lake District', 'Yorkshire Dales', 'Wales']
@@ -31,9 +33,16 @@ def calc_borda_score(df):
 # Vote for the next trip location!
 Enter your ranked vote below, then see the results:
 """
+audio_file = open('myaudio.ogg', 'rb')
+audio_bytes = audio_file.read()
+st.audio(audio_bytes, format='audio/ogg')
 
 image = Image.open('wales.JPG')
 st.image(image, caption='Photo from the last trip to Wales')
+
+coords = [[53.128075, -3.414560], [54.014785, -1.734826], [54.473345, -3.556881]]
+maps = pd.DataFrame(coords, columns=['lat', 'lon'])
+st.map(maps)
 
 name = st.selectbox('Name?', names)
 rank_1 = st.selectbox('Rank 1?', options)
@@ -77,8 +86,22 @@ if st.checkbox('Show results'):
         df
     borda_score = calc_borda_score(df.T)
     borda_barchart = pd.DataFrame.from_dict(borda_score, orient='index', columns=['Votes'])
-    st.write(f'{max(borda_score, key=borda_score.get)} wins election!')
-    st.bar_chart(borda_barchart)
+    winner = str(max(borda_score, key=borda_score.get))
+    st.metric(label="Winner:", value=winner, delta=f"{borda_score[winner]} votes")
+    # st.bar_chart(borda_barchart)
+    colors = []
+    for option in borda_barchart.index.values:
+        if option == winner:
+            colors.append('rgb(26, 118, 255)')
+        else:
+            colors.append('rgb(55, 83, 109)')
+    fig = go.Figure(data=[go.Bar(
+        x=borda_barchart.index.values,
+        y=borda_barchart.Votes.values,
+        marker_color=colors
+    )])
+    # fig.update_layout(title_text='Least Used Feature')
+    st.plotly_chart(fig, use_container_width=False)
 
 expander = st.expander("FAQ")
 expander.write("How are votes counted? Using the Borda Count - https://en.wikipedia.org/wiki/Borda_count#Borda's_original_counting")
