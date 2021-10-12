@@ -4,6 +4,7 @@ from faunadb import query as q
 from faunadb.client import FaunaClient
 from PIL import Image
 import plotly.graph_objects as go
+import pydeck as pdk
 
 
 names = ['Adi', 'Mostafa', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
@@ -40,9 +41,39 @@ st.audio(audio_bytes, format='audio/ogg')
 image = Image.open('wales.JPG')
 st.image(image, caption='Photo from the last trip to Wales')
 
-coords = [[53.128075, -3.414560], [54.014785, -1.734826], [54.473345, -3.556881]]
-maps = pd.DataFrame(coords, columns=['lat', 'lon'])
-st.map(maps)
+if st.checkbox('Show locations on a map'):
+    coords = [[53.128075, -3.414560], [54.014785, -1.734826], [54.473345, -3.556881]]
+    maps = pd.DataFrame(coords, columns=['lat', 'lon'])
+    st.map(maps)
+
+    st.pydeck_chart(pdk.Deck(
+        map_style='mapbox://styles/mapbox/light-v9',
+        initial_view_state=pdk.ViewState(
+            latitude=53,
+            longitude=-3,
+            zoom=7,
+            pitch=50,
+        ),
+        layers=[
+           pdk.Layer(
+               'HexagonLayer',
+               data=maps,
+               get_position='[lon, lat]',
+               radius=200,
+               elevation_scale=50,
+               elevation_range=[0, 1000],
+               pickable=True,
+               extruded=True,
+            ),
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=maps,
+                get_position='[lon, lat]',
+                get_color='[200, 30, 0, 160]',
+                get_radius=3000,
+            ),
+        ],
+    ))
 
 name = st.selectbox('Name?', names)
 rank_1 = st.selectbox('Rank 1?', options)
