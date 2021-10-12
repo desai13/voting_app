@@ -132,7 +132,7 @@ if st.checkbox('Show results'):
         marker_color=colors
     )])
     # fig.update_layout(title_text='Least Used Feature')
-    st.plotly_chart(fig, use_container_width=False)
+    st.plotly_chart(fig, use_container_width=True)
 
 expander = st.expander("FAQ")
 expander.write("How are votes counted? Using the Borda Count - https://en.wikipedia.org/wiki/Borda_count#Borda's_original_counting")
