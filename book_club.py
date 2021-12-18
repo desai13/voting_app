@@ -32,7 +32,7 @@ def calc_borda_score(df):
 
 """
 # Book Club
-Enter your ranked vote below, then see the results:
+Enter your ranked vote below for how often you'd like book club to be held, then see the results:
 """
 audio_file = open('01. Donda Chant.mp3', 'rb')
 audio_bytes = audio_file.read()
