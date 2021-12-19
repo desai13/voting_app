@@ -8,7 +8,7 @@ import pydeck as pdk
 
 
 names = ['Adi', 'Mostafa', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
-options = ['Weekly', 'Fortnightly', 'Monthly']
+options = ['Catch 22', 'Season of migration to the north', 'before the coffee gets cold']
 number_of_options = len(options)
 
 client = FaunaClient(
@@ -32,7 +32,7 @@ def calc_borda_score(df):
 
 """
 # Book Club
-Enter your ranked vote below for how often you'd like book club to be held, then see the results:
+Enter your ranked vote below for for what book you'd like to read, then see the results:
 """
 audio_file = open('01. Donda Chant.mp3', 'rb')
 audio_bytes = audio_file.read()
