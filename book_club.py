@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import pydeck as pdk
 
 
-names = ['Adi', 'Mostafa', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
+names = ['Adi', 'Mostafa', 'Zainab', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
 options = ['Catch 22', 'Season of migration to the north', 'before the coffee gets cold']
 number_of_options = len(options)
 
