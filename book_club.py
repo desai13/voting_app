@@ -46,7 +46,7 @@ with col2:
     f"{desc}"
 
 """
-# Next book
+## Next book
 """
 col1, col2 = st.columns(2)
 
