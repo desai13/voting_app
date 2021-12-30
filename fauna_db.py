@@ -31,7 +31,6 @@ class Fauna_DB:
         result = self.client.query(
             q.get(q.ref(q.collection("book_club"), "319401594655342786"))
         )
-        print(result)
         return result["data"]["users"]
 
     def add_suggestion(self, suggestion):
@@ -50,7 +49,6 @@ class Fauna_DB:
         result = self.client.query(
             q.get(q.ref(q.collection("book_club"), "319402375446003910"))
         )
-        print(result)
         return result["data"]["suggestions"]
 
 

@@ -58,7 +58,9 @@ with col1:
 with col2:
     st.header("Current suggestions")
     suggestions = fauna.get_suggestions()
-    f"{suggestions}"
+    bullet_list = ", ".join([suggestion for suggestion in suggestions])
+
+    f"{bullet_list}"
 
 
 # """
