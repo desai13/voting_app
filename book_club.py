@@ -1,22 +1,20 @@
 import streamlit as st
 import pandas as pd
-from faunadb import query as q
-from faunadb.client import FaunaClient
 from PIL import Image
 import plotly.graph_objects as go
+import streamlit.components.v1 as components
+import open_library
+import fauna_db
 import pydeck as pdk
 
+fauna = fauna_db.Fauna_DB(secret=st.secrets["fauna"])
+ol_api = open_library.Open_Library_API()
 
-names = ['Adi', 'Mostafa', 'Zainab', 'Lamis', 'Saloni', 'Mo', 'Dhanya', 'Alice', 'Alex', 'Katie', 'Gianni']
+book_info = ol_api.get_book_info('OL276798W')
+
+names = fauna.get_names()
 options = ['Catch 22', 'Season of migration to the north', 'before the coffee gets cold']
 number_of_options = len(options)
-
-client = FaunaClient(
-  secret=st.secrets["fauna"],
-  domain="db.eu.fauna.com",
-  port=443,
-  scheme="https"
-)
 
 
 def calc_borda_score(df):
@@ -32,14 +30,46 @@ def calc_borda_score(df):
 
 """
 # Book Club
+"""
+image = Image.open('photos/reading.jpg')
+st.image(image, caption='POV reading a book')
+"""
+## Current book
+"""
+col1, col2 = st.columns(2)
+
+with col1:
+    st.image(f"https://covers.openlibrary.org/b/id/{book_info['covers'][1]}-L.jpg")
+with col2:
+    st.header("Catch-22")
+    desc = book_info["description"]
+    f"{desc}"
+
+"""
+# Next book
+"""
+col1, col2 = st.columns(2)
+
+with col1:
+    st.header("Submit suggestions")
+    suggestion = st.text_input(label="Submit book title below")
+    button = st.button('Submit suggestion')
+    if button:
+        fauna.add_suggestion(f"{suggestion}")
+
+with col2:
+    st.header("Current suggestions")
+    suggestions = fauna.get_suggestions()
+    f"{suggestions}"
+
+
+"""
+# Vote
 Enter your ranked vote below for for what book you'd like to read, then see the results:
 """
-audio_file = open('01. Donda Chant.mp3', 'rb')
-audio_bytes = audio_file.read()
-st.audio(audio_bytes, format='audio/mp3')
-
-image = Image.open('reading.jpg')
-st.image(image, caption='POV reading a book')
+# audio_file = open('sounds/01. Donda Chant.mp3', 'rb')
+# audio_bytes = audio_file.read()
+# st.audio(audio_bytes, format='audio/mp3')
 
 name = st.selectbox('Name?', names)
 rank_1 = st.selectbox('Rank 1?', options)
@@ -62,20 +92,11 @@ if pressed:
         voting_ledger = {}
         add_to_ledger()
 
-    update = client.query(
-        q.update(
-            q.ref(q.collection("book_club"), "318318570795696320"),
-            {
-                "data": voting_ledger
-            }
-        )
-    )
+    fauna.update(voting_ledger)
     st.write("Woohoo! Thanks for voting")
 
 if st.checkbox('Show results'):
-    result = client.query(
-        q.get(q.ref(q.collection("book_club"), "318318570795696320"))
-    )
+    result = fauna.query()
     voting_ledger = result['data']
     df = pd.DataFrame.from_dict(voting_ledger).T
     if name == 'Adi':
@@ -85,7 +106,6 @@ if st.checkbox('Show results'):
     borda_barchart = pd.DataFrame.from_dict(borda_score, orient='index', columns=['Votes'])
     winner = str(max(borda_score, key=borda_score.get))
     st.metric(label="Winner:", value=winner, delta=f"{borda_score[winner]} votes")
-    # st.bar_chart(borda_barchart)
     colors = []
     for option in borda_barchart.index.values:
         if option == winner:
@@ -97,7 +117,6 @@ if st.checkbox('Show results'):
         y=borda_barchart.Votes.values,
         marker_color=colors
     )])
-    # fig.update_layout(title_text='Least Used Feature')
     st.plotly_chart(fig, use_container_width=True)
 
 expander = st.expander("FAQ")

@@ -34,11 +34,11 @@ def calc_borda_score(df):
 # Vote for the next trip location!
 Enter your ranked vote below, then see the results:
 """
-audio_file = open('01. Donda Chant.mp3', 'rb')
+audio_file = open('sounds/01. Donda Chant.mp3', 'rb')
 audio_bytes = audio_file.read()
 st.audio(audio_bytes, format='audio/mp3')
 
-image = Image.open('wales.JPG')
+image = Image.open('photos/wales.JPG')
 st.image(image, caption='Photo from the last trip to Wales')
 
 if st.checkbox('Show locations on a map'):
