@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 import plotly.graph_objects as go
-import streamlit.components.v1 as components
 import open_library
 import fauna_db
 import pydeck as pdk
@@ -41,7 +40,6 @@ col1, col2 = st.columns(2)
 with col1:
     st.image(f"https://covers.openlibrary.org/b/id/{book_info['covers'][1]}-L.jpg")
 with col2:
-    st.header("Catch-22")
     desc = book_info["description"]
     f"{desc}"
 
