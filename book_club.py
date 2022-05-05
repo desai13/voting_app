@@ -9,7 +9,7 @@ import pydeck as pdk
 fauna = fauna_db.Fauna_DB(secret=st.secrets["fauna"])
 ol_api = open_library.Open_Library_API()
 
-book_info = ol_api.get_book_info('OL276798W')
+book_info = ol_api.get_book_info('OL35612082M')
 
 names = fauna.get_names()
 options = ['A Passage North by Anuk Arudpragasam', 'Crying in H mart', 'Panenka by Ronan Hession']
@@ -38,10 +38,13 @@ st.image(image, caption='POV reading a book')
 col1, col2 = st.columns(2)
 
 with col1:
-    st.image(f"https://covers.openlibrary.org/b/id/{book_info['covers'][1]}-L.jpg")
+    st.image(f"https://covers.openlibrary.org/b/id/{book_info['covers'][0]}-L.jpg")
 with col2:
-    desc = book_info["description"]
-    f"{desc}"
+    try:
+        desc = book_info["description"]
+        f"{desc}"
+    except:
+        f"No description available"
 
 """
 ## Next book
