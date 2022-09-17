@@ -9,22 +9,22 @@ import pydeck as pdk
 fauna = fauna_db.Fauna_DB(secret=st.secrets["fauna"])
 ol_api = open_library.Open_Library_API()
 
-book_info = ol_api.get_book_info('OL893723W')
+book_info = ol_api.get_book_info('OL17837119W')
 
 names = fauna.get_names()
-options = ['Madame Bovary by Gustave Flaubert', 'The Night Circus by Erin Morgenstern', 'Panenka by Ronan Hession']
-number_of_options = len(options)
+# options = ['Madame Bovary by Gustave Flaubert', 'The Night Circus by Erin Morgenstern', 'Panenka by Ronan Hession']
+# number_of_options = len(options)
 
 
-def calc_borda_score(df):
-    borda_score = {k: 0 for k in options}
-    for i in range(0, number_of_options):
-        for rank in options:
-            try:
-                borda_score[rank] += df.iloc[i].value_counts()[rank] * (number_of_options - i)
-            except KeyError:
-                pass
-    return borda_score
+# def calc_borda_score(df):
+#     borda_score = {k: 0 for k in options}
+#     for i in range(0, number_of_options):
+#         for rank in options:
+#             try:
+#                 borda_score[rank] += df.iloc[i].value_counts()[rank] * (number_of_options - i)
+#             except KeyError:
+#                 pass
+#     return borda_score
 
 
 """
