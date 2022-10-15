@@ -9,7 +9,7 @@ import pydeck as pdk
 fauna = fauna_db.Fauna_DB(secret=st.secrets["fauna"])
 ol_api = open_library.Open_Library_API()
 
-book_info = ol_api.get_book_info('OL17837119W')
+book_info = ol_api.get_book_info('OL1136420M')
 
 names = fauna.get_names()
 # options = ['Madame Bovary by Gustave Flaubert', 'The Night Circus by Erin Morgenstern', 'Panenka by Ronan Hession']
