@@ -8,7 +8,7 @@ import pydeck as pdk
 
 fauna = fauna_db.Fauna_DB(secret=st.secrets["fauna"])
 names = fauna.get_names()
-options = ['Fifty Sounds by Polly Barton', 'Everything Ravaged, Everything Burned by Wells Tower', '84, Charing Cross Road by Helene Hanff']
+options = ['Memorial by Bryan Washington', 'Death and the Penguin by Andrey Kurkov', 'Giovanni\'s by James Baldwin']
 number_of_options = len(options)
 
 
