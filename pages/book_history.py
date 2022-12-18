@@ -28,6 +28,9 @@ with col1:
 with col2:
     st.image(f"https://covers.openlibrary.org/b/id/{passnorth['covers'][0]}-L.jpg", use_column_width='always')
     st.image(f"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1600698058i/55410610.jpg", use_column_width='always')
+    st.image(
+        f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.iX0E8rVMK9N6J0uxIVb7vwHaLb%26pid%3DApi&f=1&ipt=55bf672917cd0811e858fa557df2db73a0c9f07088a072a22e7f3cc92ba85da9&ipo=images",
+        use_column_width='always')
 
 with col3:
     st.image(f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.XugxyeYjZNb28yltVLswCQHaLQ%26pid%3DApi&f=1&ipt=2ba48595b89fd87c8e1b7bd6f25278420d45b10c7ab9d7c5242de87099fb3d4d&ipo=images", use_column_width='always')
