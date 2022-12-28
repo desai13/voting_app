@@ -8,7 +8,7 @@ import pydeck as pdk
 
 fauna = fauna_db.Fauna_DB(secret=st.secrets["fauna"])
 names = fauna.get_names()
-options = ['Memorial by Bryan Washington', 'Death and the Penguin by Andrey Kurkov', 'Giovanni\'s by James Baldwin']
+options = ['Everything Ravaged, Everything Burned by Wells Tower', 'Annihilation by Jeff Vandermeer', 'In Love by Amy Bloom']
 number_of_options = len(options)
 
 
@@ -54,30 +54,39 @@ if pressed:
 
     fauna.update(voting_ledger)
     st.write("Woohoo! Thanks for voting")
-if name == 'Adi':
-    if st.checkbox('Show results'):
-        result = fauna.query()
-        voting_ledger = result['data']
-        df = pd.DataFrame.from_dict(voting_ledger).T
-        if name == 'Adi':
+
+result = fauna.query()
+try:
+    voting_ledger = result['data']
+    df = pd.DataFrame.from_dict(voting_ledger).T
+
+    if len(df) == 6:
+        if st.checkbox('Show results'):
             """Voting Ledger"""
             df
-        borda_score = calc_borda_score(df.T)
-        borda_barchart = pd.DataFrame.from_dict(borda_score, orient='index', columns=['Votes'])
-        winner = str(max(borda_score, key=borda_score.get))
-        st.metric(label="Winner:", value=winner, delta=f"{borda_score[winner]} votes")
-        colors = []
-        for option in borda_barchart.index.values:
-            if option == winner:
-                colors.append('rgb(26, 118, 255)')
-            else:
-                colors.append('rgb(55, 83, 109)')
-        fig = go.Figure(data=[go.Bar(
-            x=borda_barchart.index.values,
-            y=borda_barchart.Votes.values,
-            marker_color=colors
-        )])
-        st.plotly_chart(fig, use_container_width=True)
+
+            borda_score = calc_borda_score(df.T)
+            borda_barchart = pd.DataFrame.from_dict(borda_score, orient='index', columns=['Votes'])
+            winner = str(max(borda_score, key=borda_score.get))
+            st.metric(label="Winner:", value=winner, delta=f"{borda_score[winner]} votes")
+            colors = []
+            for option in borda_barchart.index.values:
+                if option == winner:
+                    colors.append('rgb(26, 118, 255)')
+                else:
+                    colors.append('rgb(55, 83, 109)')
+            fig = go.Figure(data=[go.Bar(
+                x=borda_barchart.index.values,
+                y=borda_barchart.Votes.values,
+                marker_color=colors
+            )])
+            st.plotly_chart(fig, use_container_width=True)
+    else:
+        voted = df.index.to_list()
+        listToStr = ', '.join([str(elem) for elem in voted])
+        f"The following members have voted: {listToStr}"
+except KeyError:
+    "No votes received yet"
 
 expander = st.expander("FAQ")
 expander.write("How are votes counted? Using the Borda Count - https://en.wikipedia.org/wiki/Borda_count#Borda's_original_counting")
