@@ -35,5 +35,7 @@ with col2:
 with col3:
     st.image(f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.explicit.bing.net%2Fth%3Fid%3DOIP.XugxyeYjZNb28yltVLswCQHaLQ%26pid%3DApi&f=1&ipt=2ba48595b89fd87c8e1b7bd6f25278420d45b10c7ab9d7c5242de87099fb3d4d&ipo=images", use_column_width='always')
     st.image(f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.thenile.io%2Fr1000%2F9781580815963.jpg%3Fr%3D5ebd81607d294&f=1&nofb=1&ipt=ed03d94b0bf8dcca1108180fd6122f65276595dfa23483201e035b7812283b98&ipo=images", use_column_width='always')
-
+    st.image(
+        f"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1312001821i/4291946.jpg",
+        use_column_width='always')
 
