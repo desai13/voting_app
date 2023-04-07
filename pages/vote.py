@@ -31,7 +31,7 @@ Here is a short (AI generated) summary of each of the options:
 
 2. 'Middlesex' by Jeffrey Eugenides is a Pulitzer Prize-winning novel that tells the story of Calliope Stephanides, a Greek-American hermaphrodite who grows up in Detroit. The novel spans three generations of the Stephanides family and explores themes such as identity, sexuality, gender, and the immigrant experience in America.
 
-3. 'Sea of Tranquility' by Emily St. John Mandel is a novel that weaves together themes of art, time travel, love, and the plague across centuries and space. The story follows Edwin St. Andrew, a young man exiled from society who hears a violin playing in a forest and is forever changed. Centuries later, a famous writer named Olive Llewellyn is on a book tour and her best-selling pandemic novel includes a passage about a man playing his violin in an airship terminal. Gaspery-Jacques Roberts, a detective in Night City, investigates an anomaly in the wilderness and uncovers a series of lives upended. The novel is a virtuoso performance that explores the human condition and the disruption of the timeline of the universe.
+3. 'Sea of Tranquility' by Emily St. John Mandel is a novel that explores themes of time travel, love, and the plague across centuries and space. It follows the lives of Edwin St. Andrew, Olive Llewellyn, and Gaspery-Jacques Roberts as they navigate through a series of unusual events that disrupt the timeline of the universe. The novel is a virtuosic performance that captures the reality of our current moment.
 
 Enter your ranked vote below for for what book you'd like to read, then see the results:
 """
