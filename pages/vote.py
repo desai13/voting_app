@@ -31,7 +31,7 @@ Here is a short (AI generated) summary of each of the options:
 
 2. 'Middlesex' by Jeffrey Eugenides is a Pulitzer Prize-winning novel that tells the story of Calliope Stephanides, a Greek-American hermaphrodite who grows up in Detroit. The novel spans three generations of the Stephanides family and explores themes such as identity, sexuality, gender, and the immigrant experience in America.
 
-3. 'Station Eleven' by Emily St. John Mandel is a post-apocalyptic novel that takes place in the aftermath of a devastating flu pandemic that wipes out most of the world's population. The story follows a group of survivors who band together to form a traveling Shakespearean theater troupe as they navigate a world without modern technology or infrastructure. The novel is a haunting meditation on the fragility of human civilization, the enduring power of art, and the bonds that connect us all.
+3. 'Sea of Tranquility' by Emily St. John Mandel is a novel that weaves together themes of art, time travel, love, and the plague across centuries and space. The story follows Edwin St. Andrew, a young man exiled from society who hears a violin playing in a forest and is forever changed. Centuries later, a famous writer named Olive Llewellyn is on a book tour and her best-selling pandemic novel includes a passage about a man playing his violin in an airship terminal. Gaspery-Jacques Roberts, a detective in Night City, investigates an anomaly in the wilderness and uncovers a series of lives upended. The novel is a virtuoso performance that explores the human condition and the disruption of the timeline of the universe.
 
 Enter your ranked vote below for for what book you'd like to read, then see the results:
 """
